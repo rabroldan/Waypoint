@@ -9,12 +9,12 @@ Download ZIP or clone Waypoint to your local computer
 Open with with your preferred code editor
 
 ## FEATURES
--Create a Text File
--Create a Folder for Text File to be stored
--Process a Text file, with in a folder or not and convert it from text to html
--Change The title of the document
--Add an Entry within the document
--CSS Style can be changed by pasting a css link.
+1.Create a Text File
+2.Create a Folder for Text File to be stored
+3.Process a Text file, with in a folder or not and convert it from text to html
+4.Change The title of the document
+5.Add an Entry within the document
+6.CSS Style can be changed by pasting a css link.
 
 
 ##To RUN Waypoint
