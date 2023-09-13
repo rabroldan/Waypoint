@@ -37,5 +37,7 @@ A series of questions would be asked in order to process a file and convert it f
 *if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
 
 ###To run HTML
+
 Please use Open Server Live or Open with preferred broswer
+
 **PLEASE NOTE THAT Waypoint will open a broswer once the file has been created**
