@@ -18,7 +18,7 @@ Open with with your preferred code editor
 6. CSS Style can be changed by pasting a css link.
 
 
-##To RUN Waypoint
+## To RUN Waypoint
 **Please ensure you have python isntalled**
 *if not please downlaod* (https://www.python.org/downloads/)
 
@@ -36,7 +36,7 @@ A series of questions would be asked in order to process a file and convert it f
 
 *if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
 
-###To run HTML
+### To run HTML
 
 Please use Open Server Live or Open with preferred broswer
 
