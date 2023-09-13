@@ -1,5 +1,6 @@
 import argparse
 import os
+import webbrowser
 
 VERSION = "0.1"
 
@@ -27,7 +28,7 @@ def process_file(file_path):
 
         html_newfile_path = file_path.replace('.txt', '.html')
 
-        edit_content = input('Do you want to edit content?Y(Yes) or N(NO): ')
+        edit_content = input('Do you want to edit content? Y(Yes) or N(NO): ')
 
         if edit_content == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
@@ -55,6 +56,14 @@ def process_file(file_path):
 
     else:
         print("Okay Bye!")
+
+          
+
+    html_file_path =  html_newfile_path
+
+
+    webbrowser.open(html_file_path)
+
       
 
 
@@ -120,6 +129,7 @@ def file_folder_creation(input_path):
     
     return True
                 
+
 def main():
 
     parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README")
@@ -175,4 +185,5 @@ if __name__ == "__main__":
 
     else:
         print("GOOD BYE")
+      
     
