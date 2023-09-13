@@ -24,7 +24,9 @@ Open with with your preferred code editor
 
 ```
 python waypoint.py <name of folder or file>
+```
 
+```
 example
 python waypoint.py versionfolder
 python waypoint.py version.txt
@@ -33,3 +35,7 @@ Waypoint will not run without specifying a folder or file as it requires a path.
 A series of questions would be asked in order to process a file and convert it from txt to html.
 
 *if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
+
+###To run HTML
+Please use Open Server Live or Open with preferred broswer
+**PLEASE NOTE THAT Waypoint will open a broswer once the file has been created**
