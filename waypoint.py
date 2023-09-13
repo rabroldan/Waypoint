@@ -27,7 +27,7 @@ def process_file(file_path):
 
         html_newfile_path = file_path.replace('.txt', '.html')
 
-        edit_content = input('Do you want to edit content?')
+        edit_content = input('Do you want to edit content?Y(Yes) or N(NO): ')
 
         if edit_content == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
@@ -44,7 +44,9 @@ def process_file(file_path):
 
         html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
 
-        
+        with open(file_path, 'w') as txt_file:
+            txt_file.write(new_content)
+
         with open(html_newfile_path, 'w') as html_file:
             html_file.write(html_contents)
         
@@ -58,7 +60,7 @@ def process_file(file_path):
 
 
 
-def write_text_to_html(text, new_title,new_cssstyle):
+def write_text_to_html(new_content, new_title,new_cssstyle):
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -69,7 +71,7 @@ def write_text_to_html(text, new_title,new_cssstyle):
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
-  <p>{text}</p>
+  <p>{new_content}</p>
 </body>
 </html>"""
     return html_content
