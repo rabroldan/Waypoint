@@ -8,25 +8,25 @@ def process_file(file_path):
         file_contents = file.read()
         print(file_contents)
 
-    user_input = input("Do you wish to Edit?  Y(Yes) or N(NO)")
+    user_input = input("Do you wish to Edit?  Y(Yes) or N(NO): ")
 
     if user_input == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
         new_title=f"Waypoint Title"
         new_content = file_contents
 
-        editTitle = input('Do you want to edit title?')
+        editTitle = input('Do you want to edit title?  Y(Yes) or N(NO): ')
 
         if editTitle == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
-            new_title = input('What is the title?  Y(Yes) or N(NO)')
+            new_title = input('What is the title?: ')
         
     
         html_contents = write_text_to_html(file_contents,new_title)
 
         html_newfile_path = file_path.replace('.txt', '.html')
 
-        edit_content = input('Do you want to edit content? Y(Yes) or N(NO)')
+        edit_content = input('Do you want to edit content?')
 
         if edit_content == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
@@ -78,7 +78,7 @@ def process_folder(folder_path):
 
 def file_folder_creation(input_path):
     print("Path does not exist")
-    ccreate_directoru = input("Do You want to create a new folder then? Y(yes) N(no)")
+    ccreate_directoru = input("Do You want to create a new folder then? Y(yes) N(no): ")
     
     if ccreate_directoru == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
         folder_title = input('What is the name of your folder?: ')
@@ -99,22 +99,25 @@ def file_folder_creation(input_path):
     return input_path
                 
 def main():
+
+
     parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README")
 
     # -version or -v flag 
     parsedobject.add_argument('--version', '-v', action='version', version=f'%(prog)s {VERSION}')
 
     # Add the input file or folder
-    parsedobject.add_argument('input', metavar='input', type=str, help='Please Specify if it is a file or folder')
+    answer= input("Do you want to create or look for a folder? y or n: ")
 
-    args = parsedobject.parse_args()
+    if answer == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+        file = input("Please Type the name of the Document or folder: ")
 
-    input_path = args.input
+    input_path = file
 
     # If path does not exist
     if not os.path.exists(input_path):
         if input_path.endswith(".txt"):
-            create_afile = input("Do You want to create a new file then? Y(yes) N(no)")
+            create_afile = input("Do You want to create a new file then? Y(yes) N(no): ")
         
             if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
                 create_afile = input('What is the name of your file?: ')
