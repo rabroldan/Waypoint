@@ -14,6 +14,7 @@ def process_file(file_path):
 
         new_title=f"Waypoint Title"
         new_content = file_contents
+        new_cssstyle = "https://www.w3schools.com/html/styles.css"
 
         editTitle = input('Do you want to edit title?  Y(Yes) or N(NO): ')
 
@@ -22,7 +23,7 @@ def process_file(file_path):
             new_title = input('What is the title?: ')
         
     
-        html_contents = write_text_to_html(file_contents,new_title)
+
 
         html_newfile_path = file_path.replace('.txt', '.html')
 
@@ -32,8 +33,16 @@ def process_file(file_path):
 
             new_content = input('What do you want to write?: ')
         
-    
-        html_contents = write_text_to_html(new_content,new_title)
+
+        edit_css = input('Do you want to edit style with css?Y(Yes) or N(NO): ')
+        
+        if edit_css == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+
+            httml_css = input('Paste CSS link here: ')
+            new_cssstyle = httml_css
+        
+
+        html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
 
         
         with open(html_newfile_path, 'w') as html_file:
@@ -49,12 +58,13 @@ def process_file(file_path):
 
 
 
-def write_text_to_html(text, new_title):
+def write_text_to_html(text, new_title,new_cssstyle):
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
+  <link rel="stylesheet" href={new_cssstyle}>
   <title>{new_title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -88,6 +98,16 @@ def file_folder_creation(input_path):
         
         if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
                 create_afile = input('What is the name of your file?: ')
+        else:
+            return
+
+    else:
+        create_afile = input("Do You want to create a new file then? Y(yes) N(no)")
+        
+        if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+                create_afile = input('What is the name of your file?: ')
+        else:
+            return
 
     while not create_afile.endswith(".txt"):
         create_afile = input('Please enter a file name ending with ".txt": ')
@@ -96,24 +116,24 @@ def file_folder_creation(input_path):
 
     z = open(input_path,'w')
     
-    return input_path
+    return True
                 
 def main():
-
 
     parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README")
 
     # -version or -v flag 
     parsedobject.add_argument('--version', '-v', action='version', version=f'%(prog)s {VERSION}')
 
+    parsedobject.add_argument('input', metavar='input', type=str, help='Specify the input file or folder path')
+
+    args = parsedobject.parse_args()
+
+    input_path = args.input
+
     # Add the input file or folder
-    answer= input("Do you want to create or look for a folder? y or n: ")
-
-    if answer == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-        file = input("Please Type the name of the Document or folder: ")
-
-    input_path = file
-
+   
+        
     # If path does not exist
     if not os.path.exists(input_path):
         if input_path.endswith(".txt"):
@@ -126,10 +146,13 @@ def main():
 
             f = open(input_path,'w')
         else:
-            file_folder_creation(input_path)
+            bollean_rarr = file_folder_creation(input_path)
 
-    process_file(input_path)
+            if  bollean_rarr is True:
+                process_file(input_path)
     
+
+
 
     # if the input is a file 
     if os.path.isfile(input_path):
@@ -142,3 +165,12 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    answer = input("Do You want to process file again? Y(yes) N(no): ")
+        
+    if answer == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+            answer = main()
+
+    else:
+        print("GOOD BYE")
+    
