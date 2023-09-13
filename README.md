@@ -35,7 +35,10 @@ Waypoint will not run without specifying a folder or file as it requires a path.
 A series of questions would be asked in order to process a file and convert it from txt to html.
 
 *if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
-
+```
+example
+https://www.w3schools.com/html/styles.css
+```
 
 ## To run HTML
 Please use Open Server Live or Open with preferred broswer
