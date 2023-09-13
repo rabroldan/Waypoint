@@ -123,7 +123,7 @@ def file_folder_creation(input_path):
     while not create_afile.endswith(".txt"):
         create_afile = input('Please enter a file name ending with ".txt": ')
 
-# Now 'create_afile' will contain a valid file name ending with ".txt"
+
 
     z = open(input_path,'w')
     
