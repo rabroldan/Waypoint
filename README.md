@@ -1,2 +1,2 @@
 # Waypoint
-A command-line tool will process input .txt files into generated .html files.
+Is a tool to create a journal with the use of a txt file, or even convert the file from text to html. Users can utilise this tool to record their ideas, encounters, and recollections in  text, making them easily accessible and compatible with a wide range of platforms and devices. By utilising the capabilities of Waypoint, people may concentrate on the substance of their journal entries without being distracted by difficult formatting, which streamlines and improves the journaling process.
