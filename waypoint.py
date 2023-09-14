@@ -125,7 +125,7 @@ def file_folder_creation(input_path):
 
 
 
-    z = open(input_path,'w')
+    x = open(input_path,'w')
     
     return True
                 
