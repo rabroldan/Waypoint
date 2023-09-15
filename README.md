@@ -24,17 +24,18 @@ Open with with your preferred code editor
 
 1. To create a file or a folder you can try one of the following
 to create a file
-` python waypoint.txt version.txt`
+
+``` python waypoint.txt version.txt```
 
 to create a folder
-` python waypoint.txt version`
+``` python waypoint.txt version ```
 
 2. if you want to try on of the examples
 to process the file for the example
-` python waypoint.txt test.txt`
+```python waypoint.txt test.txt```
 
 to process the folder for the example
-` python waypoint.txt test`
+```python waypoint.txt test```
 
 3. if you want to change the CSS style you can paste, once you reach the Paste the css link here
 `https://www.w3schools.com/html/styles.css`
