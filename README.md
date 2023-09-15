@@ -17,30 +17,32 @@ Open with with your preferred code editor
 5. Add an Entry within the document.
 6. CSS Style can be changed by pasting a css link.
 
+# STEPS To RUN Waypoint
 
-## To RUN Waypoint
-**Please ensure you have python isntalled**
-*if not please downlaod* (https://www.python.org/downloads/)
-
-```
-python waypoint.py <name of folder or file>
-```
-
-```
-example
-python waypoint.py versionfolder
-python waypoint.py version.txt
-```
 Waypoint will not run without specifying a folder or file as it requires a path. if the path does not exist it will create either the folder or the file. 
 A series of questions would be asked in order to process a file and convert it from txt to html.
 
-*if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
-```
-example
-https://www.w3schools.com/html/styles.css
-```
+**Please ensure you have python isntalled**
+*if not please downlaod* (https://www.python.org/downloads/)
 
-## To run HTML
-Please use Open Server Live or Open with preferred broswer
+## Creating  / Processing a File
+If the file is already present then it will process the file from txt to html, otherwise it will create the file
 
-**PLEASE NOTE THAT Waypoint will open a broswer once the file has been created**
+1. Place this in the terminal to create a file
+    ```python waypoint.py version.txt```
+
+2.  If you want to try and process an example. there is a file titled test.txt. Just run this program
+    ```python waypoint.py test.txt```
+
+## Creating / Processing a folder
+
+1. If the folder is already present then it will process the files from txt to html, otherwise it will create the folder and ask to create a single file
+    ```python waypoint.py version```
+   
+2. If you want to try and process an example. there is a folder titled test that has multiple file. Just run this program
+    ```python waypoint.py test```
+
+## Changing CSS style
+
+Once the question of pasting CSS link shows you can place this.
+``https://www.w3schools.com/html/styles.css```
