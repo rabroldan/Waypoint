@@ -2,40 +2,64 @@ import argparse
 import os
 import webbrowser
 
-VERSION = "0.1"
+VERSION = "0.1" # current version of the tool
 
-def process_file(file_path):
-    with open(file_path, 'r') as file:
+def process_folder(folder_path):
+    # Process all .txt files in a folder
+    items = os.listdir(folder_path)
+    new_title=f"Waypoint Title"
+    new_cssstyle = "https://www.w3schools.com/w3css/4/w3.css"
+    
+    if not items:
+        print("The folder is empty.")
+        
+
+    print("Items in the folder:")
+    for i, item in enumerate(items, start=1):
+        print(f"{i}. {item}")
+
+        if item.endswith(".txt"):
+            # Create the new HTML file name
+            newfile = os.path.splitext(item)[0] + ".html"
+
+            # Read the content from the txt file
+            with open(os.path.join(folder_path, item), 'r') as file:
+                file_contents = file.read()
+
+            new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
+
+            # Write the content to the html file
+            with open(os.path.join(folder_path, newfile), 'w') as html_file:
+                html_file.write(new_file)
+
+            
+
+
+
+
+def process_file(file_path): # process the file from txt to HTML
+    with open(file_path, 'r') as file: # this opens the file inorder and 
         file_contents = file.read()
         print(file_contents)
 
-    user_input = input("Do you wish to Edit?  Y(Yes) or N(NO): ")
+    user_input = input("Do you wish to Edit?  Y(Yes) orN(no) to exit press q anytime: ") # this are a series of question to determin what is inside the file
 
     if user_input == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
-        new_title=f"Waypoint Title"
+        new_title=file_path
         new_content = file_contents
         new_cssstyle = "https://www.w3schools.com/html/styles.css"
 
-        editTitle = input('Do you want to edit title?  Y(Yes) or N(NO): ')
-
-        if editTitle == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-
-            new_title = input('What is the title?: ')
-        
-    
-
-
         html_newfile_path = file_path.replace('.txt', '.html')
 
-        edit_content = input('Do you want to edit content? Y(Yes) or N(NO): ')
+        edit_content = input('Do you want to edit content? Y(Yes) orN(no) to exit press q anytime: ')
 
         if edit_content == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
             new_content = input('What do you want to write?: ')
         
 
-        edit_css = input('Do you want to edit style with css?Y(Yes) or N(NO): ')
+        edit_css = input('Do you want to edit style with css?Y(Yes) orN(no) to exit press q anytime: ')
         
         if edit_css == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
 
@@ -45,37 +69,44 @@ def process_file(file_path):
 
         html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
 
-        with open(file_path, 'w') as txt_file:
-            txt_file.write(new_content)
-
-        with open(html_newfile_path, 'w') as html_file:
+        with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
             html_file.write(html_contents)
         
         print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
+        html_file_path =  html_newfile_path
 
+
+        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
 
     else:
+        html_newfile_path = file_path.replace('.txt', '.html')
+        with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
+            html_file.write(file_contents)
+        
+        print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
+        html_file_path =  html_newfile_path
+
+
+        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
+
         print("Okay Bye!")
 
           
 
-    html_file_path =  html_newfile_path
 
-
-    webbrowser.open(html_file_path)
 
       
 
 
 
-
-def write_text_to_html(new_content, new_title,new_cssstyle):
+def write_text_to_html(new_content, new_title,new_cssstyle): # this provides the layout of the html with an editable title, content and css style
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href={new_cssstyle}>
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href={new_cssstyle}>
   <title>{new_title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -87,103 +118,103 @@ def write_text_to_html(new_content, new_title,new_cssstyle):
 
 
 
-def process_folder(folder_path):
-    # Process all .txt files in a folder
-    for item in folder_path:
-        print(item)
 
-    openedfile = input("Which file do you want to open?: ")
-
-    if not os.path.exists(openedfile):
-        file_folder_creation(openedfile)
-
-def file_folder_creation(input_path):
+def file_folder_creation(input_path): # this function creates a folder if it does not exist
     print("Path does not exist")
-    ccreate_directoru = input("Do You want to create a new folder then? Y(yes) N(no): ")
+    x = os.makedirs(input_path) # this will create the directory
+    filetitle = input("What is the name of the file?: ")
     
-    if ccreate_directoru == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-        folder_title = input('What is the name of your folder?: ')
-        x = os.makedirs(folder_title)
-
-        create_afile = input("Do You want to create a new file then? Y(yes) N(no)")
-        
-        if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-                create_afile = input('What is the name of your file?: ')
-        else:
-            return
-
-    else:
-        create_afile = input("Do You want to create a new file then? Y(yes) N(no)")
-        
-        if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-                create_afile = input('What is the name of your file?: ')
-        else:
-            return
-
-    while not create_afile.endswith(".txt"):
-        create_afile = input('Please enter a file name ending with ".txt": ')
-
-
-
-    xyz = open(input_path,'w')
+    filetitle_with_extension = filetitle + ".txt" # this will create the file with an extension of txt
+    file_path = os.path.join(input_path, filetitle_with_extension) # this will ensure the file is written inside the directory
     
-    return True
-                
+    with open(file_path, 'w') as txt_file: # this will create  the file
+        txt_file.write(" ")
 
-def main():
-
-    parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README")
-
-    # -version or -v flag 
-    parsedobject.add_argument('--version', '-v', action='version', version=f'%(prog)s {VERSION}')
-
-    parsedobject.add_argument('input', metavar='input', type=str, help='Specify the input file or folder path')
-
-    args = parsedobject.parse_args()
-
-    input_path = args.input
-
-    # Add the input file or folder
+    process_file(file_path) # this will process the file
    
-        
-    # If path does not exist
-    if not os.path.exists(input_path):
-        if input_path.endswith(".txt"):
-            create_afile = input("Do You want to create a new file then? Y(yes) N(no): ")
-        
-            if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-                create_afile = input('What is the name of your file?: ')
-
-                z = open(input_path,'w')
-
-            f = open(input_path,'w')
-        else:
-            bollean_rarr = file_folder_creation(input_path)
-
-            if  bollean_rarr is True:
-                process_file(input_path)
     
+def filecreation(input_path): # this function creates a file if it does not exist
+
+   
+    with open(input_path, 'w') as txt_file:  # this will create  the file
+            txt_file.write(" ")
+
+    process_file(input_path) # this will process the file
+   
+
+def file_folder_doestnotexist(input_path): # this function creates a file or a folder - with a series of questions 
+
+    if input_path.endswith(".txt"):  #this assumes the file ends a txt if not it will assume that the document is a folder
+            
+            create_afile = input("File does not exist Do You want to create a new file then? Y(yes) N(no) to exit press q anytime: ")
+
+            if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+                filecreation(input_path)    # this will create a file and process the file txt to html
+
+            elif create_afile == ('n' or 'N' or 'NO' or 'no'): 
+                create_afolder= input("Do You want to create a new folder then? Y(yes) N(no) to exit press q anytime: ") 
+
+                if create_afolder == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+                    file_folder_creation(input_path)# thils will  create a folder after which a process of converting will be done
+
+                elif create_afile == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
+                    return False
+                
+            elif create_afile == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
+                 return 
+    
+    else:# thils will create a folder after which a process of converting a file will be done
+        create_afolder= input("Do You want to create a new folder then? Y(yes) N(no) to exit press q anytime: ") 
+
+        if create_afolder == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
+            file_folder_creation(input_path) 
+        elif create_afolder == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
+                return
 
 
+def main(): # this is the main function
 
-    # if the input is a file 
-    if os.path.isfile(input_path):
+    parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README") # will show up once -h or - help is placed in the argument
+
+
+    parsedobject.add_argument('--version', '-v', action='version', version=f'%(prog)s {VERSION}')  # shows which version it is on with -version or -v flag 
+
+    parsedobject.add_argument('input', metavar='input', type=str, help='Specify the input file or folder path') #awaits for input of either a folder or a file
+
+    args = parsedobject.parse_args() # pass the file or folder object into the argument
+
+    input_path = args.input #assign the newly assigned argument to a variable
+
+
+    # Create the a file or folder
+        
+    # If path does not exist this will determine whether a document or a txt file needs to be created
+    if not os.path.exists(input_path):
+        file_folder_doestnotexist(input_path)
+
+      
+
+    # if the input is a file this will process the convertion
+    elif os.path.isfile(input_path):
         process_file(input_path)
-    # if the input is a folder
+
+    # if the input is a folder this will process the convertions of the txt files inside it
     elif os.path.isdir(input_path):
         process_folder(input_path)
     else:
         print(f"Error: '{input_path}' is not a file or a folder.")
+           
+         
 
-if __name__ == "__main__":
-    main()
 
-    answer = input("Do You want to process file again? Y(yes) N(no): ")
+
+
+if __name__ == "__main__": # this starts the main program
+    main() # this begins with a argument of either a file or a
+
+    print("Files has been processed GOOD BYE")
         
-    if answer == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-            answer = main()
 
-    else:
-        print("GOOD BYE")
-      
+
+    
     
