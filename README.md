@@ -22,25 +22,19 @@ Open with with your preferred code editor
 **Please ensure you have python isntalled**
 *if not please downlaod* (https://www.python.org/downloads/)
 
-```
-python waypoint.py <name of folder or file>
-```
+1. To create a file or a folder you can try one of the following
+to create a file
+` python waypoint.txt version.txt`
 
-```
-example
-python waypoint.py versionfolder
-python waypoint.py version.txt
-```
-Waypoint will not run without specifying a folder or file as it requires a path. if the path does not exist it will create either the folder or the file. 
-A series of questions would be asked in order to process a file and convert it from txt to html.
+to create a folder
+` python waypoint.txt version`
 
-*if you want to change css link please traverse to the question and paste a **CSS LINK** to the question*
-```
-example
-https://www.w3schools.com/html/styles.css
-```
+2. if you want to try on of the examples
+to process the file for the example
+` python waypoint.txt test.txt`
 
-## To run HTML
-Please use Open Server Live or Open with preferred broswer
+to process the folder for the example
+` python waypoint.txt test`
 
-**PLEASE NOTE THAT Waypoint will open a broswer once the file has been created**
+3. if you want to change the CSS style you can paste, once you reach the Paste the css link here
+`https://www.w3schools.com/html/styles.css`
