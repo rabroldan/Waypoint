@@ -18,7 +18,8 @@ def process_folder(folder_path):
     for i, item in enumerate(items, start=1):
         print(f"{i}. {item}")
 
-        if item.endswith(".txt"):
+        ## Markdown support: Allows for .md files in directories to work
+        if item.endswith(".txt") or item.endswith(".md"):
             # Create the new HTML file name
             newfile = os.path.splitext(item)[0] + ".html"
 
@@ -26,7 +27,11 @@ def process_folder(folder_path):
             with open(os.path.join(folder_path, item), 'r') as file:
                 file_contents = file.read()
 
-            new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
+            ## Markdown support: Adding different writing methods for each different type of file
+            if is_markdown(item):
+                new_file = write_markdown_to_html(file_contents, new_title,new_cssstyle)
+            else:
+                new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
 
             # Write the content to the html file
             with open(os.path.join(folder_path, newfile), 'w') as html_file:
@@ -50,7 +55,12 @@ def process_file(file_path): # process the file from txt to HTML
         new_content = file_contents
         new_cssstyle = "https://www.w3schools.com/html/styles.css"
 
-        html_newfile_path = file_path.replace('.txt', '.html')
+        ## Markdown support changing new filename based on what type of file is it
+        html_newfile_path = ""
+        if is_markdown(file_path):
+            html_newfile_path = file_path.replace('.md', '.html')
+        else: 
+            html_newfile_path = file_path.replace('.txt', '.html')
 
         edit_content = input('Do you want to edit content? Y(Yes) orN(no) to exit press q anytime: ')
 
@@ -65,9 +75,13 @@ def process_file(file_path): # process the file from txt to HTML
 
             httml_css = input('Paste CSS link here: ')
             new_cssstyle = httml_css
-        
 
-        html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
+        ## Markdown support: changing which function gets called for each different filetype
+        html_contents = ""
+        if is_markdown(file_path):
+            html_contents = write_markdown_to_html(new_content,new_title,new_cssstyle)
+        else:
+            html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
 
         with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
             html_file.write(html_contents)
@@ -79,9 +93,24 @@ def process_file(file_path): # process the file from txt to HTML
         webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
 
     else:
-        html_newfile_path = file_path.replace('.txt', '.html')
-        with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
-            html_file.write(file_contents)
+
+        ## Markdown support (checks whether file is markdown and sends it to markdown function otherwise processes it normally as a text file)
+
+        new_cssstyle = "https://www.w3schools.com/html/styles.css"  # Acessing the default css in this scope
+
+        if is_markdown(file_path):
+            html_newfile_path = file_path.replace('.md', '.html')
+            with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
+
+                updated_text = write_markdown_to_html(file_contents, file_path, new_cssstyle)
+                html_file.write(updated_text)    # writing html to new file
+                
+        else:
+            html_newfile_path = file_path.replace('.txt', '.html')
+            with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
+                html_file.write(file_contents)
+
+        
         
         print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
         html_file_path =  html_newfile_path
@@ -92,13 +121,6 @@ def process_file(file_path): # process the file from txt to HTML
         print("Okay Bye!")
 
           
-
-
-
-      
-
-
-
 def write_text_to_html(new_content, new_title,new_cssstyle): # this provides the layout of the html with an editable title, content and css style
 
     html_content = f"""<!DOCTYPE html>
@@ -123,7 +145,7 @@ def file_folder_creation(input_path): # this function creates a folder if it doe
     print("Path does not exist")
     x = os.makedirs(input_path) # this will create the directory
     filetitle = input("What is the name of the file?: ")
-    
+
     filetitle_with_extension = filetitle + ".txt" # this will create the file with an extension of txt
     file_path = os.path.join(input_path, filetitle_with_extension) # this will ensure the file is written inside the directory
     
@@ -144,7 +166,8 @@ def filecreation(input_path): # this function creates a file if it does not exis
 
 def file_folder_doestnotexist(input_path): # this function creates a file or a folder - with a series of questions 
 
-    if input_path.endswith(".txt"):  #this assumes the file ends a txt if not it will assume that the document is a folder
+    ## Markdown support: Allows for user to specifiy a .md file
+    if input_path.endswith(".txt") or input_path.endswith(".md"):  #this assumes the file ends a txt if not it will assume that the document is a folder
             
             create_afile = input("File does not exist Do You want to create a new file then? Y(yes) N(no) to exit press q anytime: ")
 
@@ -170,6 +193,62 @@ def file_folder_doestnotexist(input_path): # this function creates a file or a f
             file_folder_creation(input_path) 
         elif create_afolder == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
                 return
+
+
+# Markdown support functions here:
+#
+# Similiar to the text variant this function writes converts the markdown into HTML with some of the included features (headings, bolding, italics)
+# Interacts similar to text
+def write_markdown_to_html(new_content, new_title,new_cssstyle):
+    
+    # Markdown conversion
+    converted_md = ""
+    lines = new_content.splitlines()    # Spliting each line of the new_content into a list
+
+
+    i = 0
+    for  curr_line in lines:        # Going through each line
+       
+        if '#' in curr_line:                        # Checking for titles
+            if curr_line.startswith("###"):
+                curr_line = "<h3>" + curr_line.lstrip('#') + "</h3>\n"
+            elif curr_line.startswith("##"):                             
+                curr_line = "<h2>" + curr_line.lstrip('#') + "</h2>\n"
+            else:
+                curr_line = "<h1>" + curr_line.lstrip('#') + "</h1>\n"
+
+        elif '*' in curr_line:                                              # Checking for bold or itialized text
+            if curr_line.startswith('**') and curr_line.endswith('**'):
+                curr_line = "<b>" + curr_line.strip('*') + "</b><br/>\n"
+            elif curr_line.startswith('*') and curr_line.endswith("*"):
+                curr_line = "<i>" + curr_line.strip('*') + "</i><br/>\n"
+            else:
+                curr_line = "<p>" + curr_line + "</p>\n"
+        elif len(curr_line) > 0:                                     # Checking for regular text
+            curr_line = "<p>" + curr_line + "</p>\n"     
+        else:
+            curr_line = '\n'       # Ignoring spaces
+
+        converted_md += curr_line       # adding change to final conversion
+
+    # Creating HTML file contents
+    html_content = f"""<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href={new_cssstyle}>
+  <title>{new_title}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+  {converted_md}                                                    
+</body>
+</html>"""
+    return html_content
+
+def is_markdown(file_name):
+    return (".md" in  file_name)
 
 
 def main(): # this is the main function
