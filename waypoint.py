@@ -18,7 +18,8 @@ def process_folder(folder_path):
     for i, item in enumerate(items, start=1):
         print(f"{i}. {item}")
 
-        if item.endswith(".txt"):
+        ## Markdown support: Allows for .md files in directories to work
+        if item.endswith(".txt") or item.endswith(".md"):
             # Create the new HTML file name
             newfile = os.path.splitext(item)[0] + ".html"
 
@@ -26,7 +27,11 @@ def process_folder(folder_path):
             with open(os.path.join(folder_path, item), 'r') as file:
                 file_contents = file.read()
 
-            new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
+            ## Markdown support: Adding different writing methods for each different type of file
+            if is_markdown(item):
+                new_file = write_markdown_to_html(file_contents, new_title,new_cssstyle)
+            else:
+                new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
 
             # Write the content to the html file
             with open(os.path.join(folder_path, newfile), 'w') as html_file:
