@@ -16,8 +16,8 @@ Open with with your preferred code editor
 4. Change The title of the document.
 5. Add an Entry within the document.
 6. CSS Style can be changed by pasting a css link.
-
-
+7. Create a markdown file 
+8. Convert a markdown file to a HTML file
 
 ## To Run Waypoint
 
@@ -30,6 +30,10 @@ If not, please download it [here](https://www.python.org/downloads/).
    - To create a file:
      ```
      python waypoint.txt version.txt
+     ```
+     or
+     ```
+     python waypoint.py version.md
      ```
 
    - To create a folder:
