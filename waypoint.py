@@ -90,7 +90,7 @@ def process_file(file_path): # process the file from txt to HTML
         html_file_path =  html_newfile_path
 
 
-        # webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
+        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
 
     else:
 
@@ -116,7 +116,7 @@ def process_file(file_path): # process the file from txt to HTML
         html_file_path =  html_newfile_path
 
 
-        # webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
+        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
 
         print("Okay Bye!")
 
