@@ -17,8 +17,12 @@ Open with with your preferred code editor
 5. Add an Entry within the document.
 6. Add a Option to output directory
 7. Create a markdown file 
-8. Convert a markdown file to a HTML file
-9. Mardown now Support a inline code with single backtick ` or triple backtick ```
+8. Markdown Features
+   -Bold
+   -Italized
+   -Inline Code with single backtick ` or triple backtick ```
+   - Horizontal rule
+
 
 ## To Run Waypoint
 
