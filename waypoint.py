@@ -2,7 +2,7 @@
 import os
 import sys
 
-VERSION = "1.2" # current version of the tool
+VERSION = "2" # current version of the tool
 
 def process_folder(folder_path):
     # Process all .txt files in a folder
@@ -76,8 +76,8 @@ def process_file(file_path): # process the file from txt to HTML
 
         print("Okay Bye!")
 
-          
-def write_text_to_html(new_content, new_title, ): # this provides the layout of the html with an editable title, content and css style
+# this provides the layout of the html with an editable title, content and css style
+def write_text_to_html(new_content, new_title, ): 
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
@@ -154,6 +154,12 @@ def write_markdown_to_html(new_content, new_title, ):
                  curr_line = "<code>" + curr_line.strip('`') + "</code>\n\n"
             else:
                 curr_line = "<p>" + curr_line + "</p>\n"
+
+        elif '-' in curr_line:                        # Checking for titles
+            if curr_line.startswith("---") :
+                curr_line = '<hr> \n'
+            else:
+                curr_line = '</br>'
 
         elif '*' in curr_line:                                              # Checking for bold or itialized text
             if curr_line.startswith('**') and curr_line.endswith('**'):
