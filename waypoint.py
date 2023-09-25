@@ -1,14 +1,14 @@
-import argparse
-import os
-import webbrowser
 
-VERSION = "0.1" # current version of the tool
+import os
+import sys
+
+VERSION = "1.2" # current version of the tool
 
 def process_folder(folder_path):
     # Process all .txt files in a folder
     items = os.listdir(folder_path)
     new_title=f"Waypoint Title"
-    new_cssstyle = "https://www.w3schools.com/w3css/4/w3.css"
+    
     
     if not items:
         print("The folder is empty.")
@@ -16,7 +16,8 @@ def process_folder(folder_path):
 
     print("Items in the folder:")
     for i, item in enumerate(items, start=1):
-        print(f"{i}. {item}")
+        if item.endswith(".txt") or item.endswith(".md"):
+            print(f"{i}. {item}")
 
         ## Markdown support: Allows for .md files in directories to work
         if item.endswith(".txt") or item.endswith(".md"):
@@ -29,9 +30,9 @@ def process_folder(folder_path):
 
             ## Markdown support: Adding different writing methods for each different type of file
             if is_markdown(item):
-                new_file = write_markdown_to_html(file_contents, new_title,new_cssstyle)
+                new_file = write_markdown_to_html(file_contents, new_title, )
             else:
-                new_file = write_text_to_html(file_contents, new_title,new_cssstyle)
+                new_file = write_text_to_html(file_contents, new_title, )
 
             # Write the content to the html file
             with open(os.path.join(folder_path, newfile), 'w') as html_file:
@@ -45,15 +46,12 @@ def process_folder(folder_path):
 def process_file(file_path): # process the file from txt to HTML
     with open(file_path, 'r') as file: # this opens the file inorder and 
         file_contents = file.read()
-        print(file_contents)
+    
+        
+        new_title=os.path.splitext(file_path)[0] 
 
-    user_input = input("Do you wish to Edit?  Y(Yes) orN(no) to exit press q anytime: ") # this are a series of question to determin what is inside the file
-
-    if user_input == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-
-        new_title=file_path
         new_content = file_contents
-        new_cssstyle = "https://www.w3schools.com/html/styles.css"
+         
 
         ## Markdown support changing new filename based on what type of file is it
         html_newfile_path = ""
@@ -62,73 +60,31 @@ def process_file(file_path): # process the file from txt to HTML
         else: 
             html_newfile_path = file_path.replace('.txt', '.html')
 
-        edit_content = input('Do you want to edit content? Y(Yes) orN(no) to exit press q anytime: ')
-
-        if edit_content == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-
-            new_content = input('What do you want to write?: ')
-        
-
-        edit_css = input('Do you want to edit style with css?Y(Yes) orN(no) to exit press q anytime: ')
-        
-        if edit_css == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-
-            httml_css = input('Paste CSS link here: ')
-            new_cssstyle = httml_css
-
         ## Markdown support: changing which function gets called for each different filetype
         html_contents = ""
         if is_markdown(file_path):
-            html_contents = write_markdown_to_html(new_content,new_title,new_cssstyle)
+            html_contents = write_markdown_to_html(new_content,new_title, )
         else:
-            html_contents = write_text_to_html(new_content,new_title,new_cssstyle)
+            html_contents = write_text_to_html(new_content,new_title, )
 
         with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
             html_file.write(html_contents)
         
         print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
-        html_file_path =  html_newfile_path
 
 
-        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
-
-    else:
-
-        ## Markdown support (checks whether file is markdown and sends it to markdown function otherwise processes it normally as a text file)
-
-        new_cssstyle = "https://www.w3schools.com/html/styles.css"  # Acessing the default css in this scope
-
-        if is_markdown(file_path):
-            html_newfile_path = file_path.replace('.md', '.html')
-            with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
-
-                updated_text = write_markdown_to_html(file_contents, file_path, new_cssstyle)
-                html_file.write(updated_text)    # writing html to new file
-                
-        else:
-            html_newfile_path = file_path.replace('.txt', '.html')
-            with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
-                html_file.write(file_contents)
-
-        
-        
-        print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
-        html_file_path =  html_newfile_path
-
-
-        webbrowser.open(html_file_path) # if only 1 file is processced and this will open the file
 
         print("Okay Bye!")
 
           
-def write_text_to_html(new_content, new_title,new_cssstyle): # this provides the layout of the html with an editable title, content and css style
+def write_text_to_html(new_content, new_title, ): # this provides the layout of the html with an editable title, content and css style
 
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href={new_cssstyle}>
+ 
+
   <title>{new_title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -139,67 +95,41 @@ def write_text_to_html(new_content, new_title,new_cssstyle): # this provides the
     return html_content
 
 
+def outputToDir(file_path, outputpath):
+    # Create the output folder if it doesn't exist
+    if not os.path.exists(outputpath):
+        os.makedirs(outputpath)
 
+    with open(file_path, 'r') as file:
+        file_contents = file.read()
 
-def file_folder_creation(input_path): # this function creates a folder if it does not exist
-    print("Path does not exist")
-    x = os.makedirs(input_path) # this will create the directory
-    filetitle = input("What is the name of the file?: ")
+        # Define the output file path within the output folder
+        output_file_name = os.path.basename(file_path)  # Get the file name without the path
+        output_file_name_without_extension, _ = os.path.splitext(output_file_name)
+        output_html_file_name = f"{output_file_name_without_extension}.html"
+        output_html_path = os.path.join(outputpath, output_html_file_name)
 
-    filetitle_with_extension = filetitle + ".txt" # this will create the file with an extension of txt
-    file_path = os.path.join(input_path, filetitle_with_extension) # this will ensure the file is written inside the directory
-    
-    with open(file_path, 'w') as txt_file: # this will create  the file
-        txt_file.write(" ")
+        new_title = output_file_name_without_extension  # You can customize this as needed
+        new_content = file_contents
+         
 
-    process_file(file_path) # this will process the file
-   
-    
-def filecreation(input_path): # this function creates a file if it does not exist
+        ## Markdown support: changing which function gets called for each different filetype
+        html_contents = ""
+        if is_markdown(file_path):
+            html_contents = write_markdown_to_html(new_content, new_title  )
+        else:
+            html_contents = write_text_to_html(new_content, new_title  )
 
-   
-    with open(input_path, 'w') as txt_file:  # this will create  the file
-            txt_file.write(" ")
+        with open(output_html_path, 'w') as html_file:
+            html_file.write(html_contents)
 
-    process_file(input_path) # this will process the file
-   
-
-def file_folder_doestnotexist(input_path): # this function creates a file or a folder - with a series of questions 
-
-    ## Markdown support: Allows for user to specifiy a .md file
-    if input_path.endswith(".txt") or input_path.endswith(".md"):  #this assumes the file ends a txt if not it will assume that the document is a folder
-            
-            create_afile = input("File does not exist Do You want to create a new file then? Y(yes) N(no) to exit press q anytime: ")
-
-            if create_afile == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-                filecreation(input_path)    # this will create a file and process the file txt to html
-
-            elif create_afile == ('n' or 'N' or 'NO' or 'no'): 
-                create_afolder= input("Do You want to create a new folder then? Y(yes) N(no) to exit press q anytime: ") 
-
-                if create_afolder == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-                    file_folder_creation(input_path)# thils will  create a folder after which a process of converting will be done
-
-                elif create_afile == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
-                    return False
-                
-            elif create_afile == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
-                 return 
-    
-    else:# thils will create a folder after which a process of converting a file will be done
-        create_afolder= input("Do You want to create a new folder then? Y(yes) N(no) to exit press q anytime: ") 
-
-        if create_afolder == ('y' or 'Y' or 'yes' or 'YES' or 'Yes' or 'yeS'):
-            file_folder_creation(input_path) 
-        elif create_afolder == 'q' or 'Q' or 'n' or 'N' or 'NO' or 'no':
-                return
-
+        print(f"Text from '{file_path}' converted to HTML and saved as '{output_html_path}'.")
 
 # Markdown support functions here:
 #
 # Similiar to the text variant this function writes converts the markdown into HTML with some of the included features (headings, bolding, italics)
 # Interacts similar to text
-def write_markdown_to_html(new_content, new_title,new_cssstyle):
+def write_markdown_to_html(new_content, new_title, ):
     
     # Markdown conversion
     converted_md = ""
@@ -236,8 +166,6 @@ def write_markdown_to_html(new_content, new_title,new_cssstyle):
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href={new_cssstyle}>
   <title>{new_title}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
@@ -252,46 +180,50 @@ def is_markdown(file_name):
 
 
 def main(): # this is the main function
+    if len(sys.argv) > 1:
+        if sys.argv[1] == '-h' or sys.argv[1] == '-help':
+            # Display help message
+            print("Help message goes here.")
+        elif sys.argv[1] == '-v' or sys.argv[1] == '-version':
+            # Display version
+            print("Version: 1.0")  # Replace with your actual version
+        elif len(sys.argv) == 2:
+            input_path = sys.argv[1]
 
-    parsedobject = argparse.ArgumentParser(description="Waypoints to follow,  Please open README") # will show up once -h or - help is placed in the argument
+            if not os.path.exists(input_path):
+                print("FILE/DOCUMENT DOES NOT EXIST")
+            elif os.path.isfile(input_path):
+                process_file(input_path)
+            elif os.path.isdir(input_path):
+                process_folder(input_path)
+            else:
+                print(f"Error: '{input_path}' is not a file or a folder.")
+        elif sys.argv[2] == '-o' or sys.argv[2] == '-O' or sys.argv[2] == '-output' or sys.argv[2] == '-Output':
+            input_path = sys.argv[1]
+            output_folder  = sys.argv[3]
+            outputToDir(input_path, output_folder )
 
 
-    parsedobject.add_argument('--version', '-v', action='version', version=f'%(prog)s {VERSION}')  # shows which version it is on with -version or -v flag 
-
-    parsedobject.add_argument('input', metavar='input', type=str, help='Specify the input file or folder path') #awaits for input of either a folder or a file
-
-    args = parsedobject.parse_args() # pass the file or folder object into the argument
-
-    input_path = args.input #assign the newly assigned argument to a variable
-
-
-    # Create the a file or folder
-        
-    # If path does not exist this will determine whether a document or a txt file needs to be created
-    if not os.path.exists(input_path):
-        file_folder_doestnotexist(input_path)
-
-      
-
-    # if the input is a file this will process the convertion
-    elif os.path.isfile(input_path):
-        process_file(input_path)
-
-    # if the input is a folder this will process the convertions of the txt files inside it
-    elif os.path.isdir(input_path):
-        process_folder(input_path)
+        else:
+            print("Invalid argument provided!")
     else:
-        print(f"Error: '{input_path}' is not a file or a folder.")
-           
+        print('Invalid argument provided!')
+        print('Use --help or -h flag for more info')
+
          
 
 
 
 
 if __name__ == "__main__": # this starts the main program
-    main() # this begins with a argument of either a file or a
 
-    print("Files has been processed GOOD BYE")
+    check = main() # this begins with a argument of either a file or a
+
+    if check == True:
+        print("Files has been processed GOOD BYE")
+    elif check == False:
+        print("Files has Not been processed, please create the file / document before converting. GOOD BYE")
+
         
 
 

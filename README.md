@@ -15,7 +15,7 @@ Open with with your preferred code editor
 3. Process a Text file, with in a folder or not and convert it from text to html.
 4. Change The title of the document.
 5. Add an Entry within the document.
-6. CSS Style can be changed by pasting a css link.
+6. Add a Option to output directory
 7. Create a markdown file 
 8. Convert a markdown file to a HTML file
 
@@ -25,9 +25,9 @@ Open with with your preferred code editor
 
 If not, please download it [here](https://www.python.org/downloads/).
 
-1. To create a file or a folder, you can try one of the following:
+1. To process a file or a folder, you can try one of the following:
 
-   - To create a file:
+   - To process a file:
      ```
      python waypoint.txt version.txt
      ```
@@ -36,11 +36,12 @@ If not, please download it [here](https://www.python.org/downloads/).
      python waypoint.py version.md
      ```
 
-   - To create a folder:
+   - To process a folder:
      ```
      python waypoint.txt version
      ```
 
+  
 2. If you want to try one of the examples:
 
    - To process the file for the example:
@@ -52,7 +53,14 @@ If not, please download it [here](https://www.python.org/downloads/).
      ```
      python waypoint.txt test
      ```
+3. To process To process a file or a folder to a different output try the following
+  
+    ```
+     python waypoint.py version.txt -o newDirectory
+     ```
+     or
+     ```
+     python waypoint.py version.md -o newDirectory
+     ```
 
-3. If you want to change the CSS style, you can paste the CSS link when prompted. Simply reach the "Paste the CSS link here" step:
 
-   `https://www.w3schools.com/html/styles.css`
