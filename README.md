@@ -18,6 +18,7 @@ Open with with your preferred code editor
 6. Add a Option to output directory
 7. Create a markdown file 
 8. Convert a markdown file to a HTML file
+9. Mardown now Support a inline code with single backtick ` or triple backtick ```
 
 ## To Run Waypoint
 
