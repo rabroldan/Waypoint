@@ -147,6 +147,14 @@ def write_markdown_to_html(new_content, new_title, ):
             else:
                 curr_line = "<h1>" + curr_line.lstrip('#') + "</h1>\n"
 
+        elif '`' in curr_line:                        # Checking for titles
+            if curr_line.startswith("```") and curr_line.endswith("```"):
+                curr_line = "<code>" + curr_line.strip('`') + "</code>\n\n"
+            elif curr_line.startswith("`") and curr_line.endswith("`"):                             
+                 curr_line = "<code>" + curr_line.strip('`') + "</code>\n\n"
+            else:
+                curr_line = "<p>" + curr_line + "</p>\n"
+
         elif '*' in curr_line:                                              # Checking for bold or itialized text
             if curr_line.startswith('**') and curr_line.endswith('**'):
                 curr_line = "<b>" + curr_line.strip('*') + "</b><br/>\n"
