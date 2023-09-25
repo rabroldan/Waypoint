@@ -2,7 +2,7 @@
 import os
 import sys
 
-VERSION = "1.3" # current version of the tool
+VERSION = "2" # current version of the tool
 
 def process_folder(folder_path):
     # Process all .txt files in a folder
