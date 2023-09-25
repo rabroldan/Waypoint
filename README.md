@@ -10,18 +10,17 @@ Open with with your preferred code editor
 
 ## Features
 
-1. Create a Text File.
-2. Create a Folder for Text File to be stored.
-3. Process a Text file, with in a folder or not and convert it from text to html.
-4. Change The title of the document.
-5. Add an Entry within the document.
-6. Add a Option to output directory
-7. Create a markdown file 
-8. Markdown Features
-   -Bold
-   -Italized
-   -Inline Code with single backtick ` or triple backtick ```
-   - Horizontal rule
+3. **Convert Text to HTML:** Process individual text files, whether they are in a folder or not, and convert their content to HTML format for improved readability.
+
+6. **Specify Output Directory:** Provide users with the option to specify a custom output directory where HTML files will be saved. If the directory doesn't exist, create it automatically.
+
+7. **Create Markdown Files:** Allow users to create new Markdown files for flexible and structured text formatting.
+
+8. **Markdown Formatting Features:**
+   - **Bold Text:** Support for formatting text as **bold**.
+   - **Italicized Text:** Support for formatting text as *italicized*.
+   - **Inline Code Blocks:** Enable users to include inline code with either single backticks (`) or triple backticks (```) and ensure proper code formatting.
+   - **Horizontal Rules:** Offer support for horizontal rules to visually separate content sections in Markdown.
 
 
 ## To Run Waypoint
