@@ -203,6 +203,9 @@ def main(): # this is the main function
         if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
             # Parse config file, override all other flags
             print("checking for toml file")
+            config = "-c" if ('-c' in sys.argv) else "-config"
+            config_index = sys.argv.index(config)
+
         elif sys.argv[1] == '-h' or sys.argv[1] == '-help':
             # Display help message
             print("Help message goes here.")
