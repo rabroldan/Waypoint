@@ -195,8 +195,11 @@ def is_markdown(file_name):
 def parse_TOML(config_file):
     # parses input TOML-formatted config file
     with open(config_file, 'rb') as f:
-        data:dict = tomli.load(f)
-        return data
+        try:
+            data:dict = tomli.load(f)
+            return data
+        except tomli.TOMLDecodeError:
+            print("TOML FILE COULD NOT BE PARSED. PLEASE CHECK THE FORMAT")
 
 def set_config():
     # Parse config file, override all other flags
