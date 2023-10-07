@@ -222,6 +222,8 @@ def set_config():
         print("CONFIG FILE DOES NOT EXIST")
     elif os.path.isdir(sys.argv[config_index+1]): # if directory is provided
         print("PLEASE PROVIDE A FILE")
+    elif not sys.argv[config_index+1].endswith(".toml"): # if non-TOML file is provided
+        print ("PLEASE PROVIDE A TOML FILE")
     else: # argument is a file that exists
         config_path = sys.argv[config_index+1]
         data:dict = parse_TOML(config_path)
