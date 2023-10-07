@@ -192,7 +192,12 @@ def write_markdown_to_html(new_content, new_title, ):
 def is_markdown(file_name):
     return (".md" in  file_name)
 
-
+def parse_TOML(config_file):
+    # parses input TOML-formatted config file
+    with open(config_file, 'rb') as f:
+        data:dict = tomli.load(f)
+        return data
+    
 def main(): # this is the main function
     if len(sys.argv) > 1:
         if sys.argv[1] == '-h' or sys.argv[1] == '-help':
