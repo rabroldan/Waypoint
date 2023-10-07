@@ -229,6 +229,17 @@ def set_config():
             print("Could not parse provided config file. Please double-check passed file")
         else:
             print(data)
+            apply_config(data)
+
+def apply_config(data):
+    input_path = sys.argv[1]
+    # search for and apply options one by one - currently only -o/-output flags supported
+    # if data["option-name"]
+        # option_to_enable = data["option-name"]
+    if data["output"]:
+        output_folder  = data["output"]
+
+    outputToDir(input_path, output_folder)
 
 def main(): # this is the main function
     if len(sys.argv) > 1:
