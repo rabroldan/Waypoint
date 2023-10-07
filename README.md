@@ -22,6 +22,7 @@ Open with with your preferred code editor
    - **Inline Code Blocks:** Enable users to include inline code with either single backticks (`) or triple backticks (```) and ensure proper code formatting.
    - **Horizontal Rules:** Offer support for horizontal rules to visually separate content sections in Markdown.
 
+9. **Config File Support:** Provide users with the ability to specify optional arguments in a [TOML](https://toml.io/en/) configuration file instead of passing them as command line arguments
 
 ## To Run Waypoint
 
@@ -66,5 +67,12 @@ If not, please download it [here](https://www.python.org/downloads/).
      ```
      python waypoint.py version.md -o newDirectory
      ```
-
-
+4. To pass a TOML-formatted config file when processing a file try the following
+      ```
+      python waypoint.py version.txt -c config.toml
+      ```
+   or
+      ```
+      python waypoint.py version.txt -config config.toml
+      ```
+   
