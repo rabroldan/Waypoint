@@ -225,7 +225,10 @@ def set_config():
     else: # argument is a file that exists
         config_path = sys.argv[config_index+1]
         data:dict = parse_TOML(config_path)
-        print(data)
+        if not data: # if parse_TOML() failed
+            print("Could not parse provided config file. Please double-check passed file")
+        else:
+            print(data)
 
 def main(): # this is the main function
     if len(sys.argv) > 1:
