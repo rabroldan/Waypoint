@@ -197,15 +197,17 @@ def parse_TOML(config_file):
     with open(config_file, 'rb') as f:
         data:dict = tomli.load(f)
         return data
-    
+
+def set_config():
+    # Parse config file, override all other flags
+    print("checking for toml file")
+    config = "-c" if ('-c' in sys.argv) else "-config"
+    config_index = sys.argv.index(config)
+
 def main(): # this is the main function
     if len(sys.argv) > 1:
         if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
-            # Parse config file, override all other flags
-            print("checking for toml file")
-            config = "-c" if ('-c' in sys.argv) else "-config"
-            config_index = sys.argv.index(config)
-
+            set_config()
         elif sys.argv[1] == '-h' or sys.argv[1] == '-help':
             # Display help message
             print("Help message goes here.")
