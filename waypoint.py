@@ -233,6 +233,7 @@ def set_config():
 
 def apply_config(data):
     input_path = sys.argv[1]
+    output_folder = "./waypoint" #if no output defined, use ./waypoint
     # search for and apply options one by one - currently only -o/-output flags supported
     # if "option-name" in data.keys():
         # option_to_enable = data["option-name"]
