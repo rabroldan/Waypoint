@@ -204,6 +204,24 @@ def set_config():
     config = "-c" if ('-c' in sys.argv) else "-config"
     config_index = sys.argv.index(config)
 
+    # to be deleted
+    print("reading config file")
+    print("There are this many arguments:")
+    print(len(sys.argv))
+    print("config argument is ")
+    print(config)
+    print("config file should be at")
+    print(config_index+1)
+    # config file path immediately follows -c or -config flag
+    if len(sys.argv) == config_index+1: # if no argument follows config flag
+        print("NO CONFIG FILE PROVIDED")
+    elif not os.path.exists(sys.argv[config_index+1]): # if provided argument is not valid
+        print("CONFIG FILE DOES NOT EXIST")
+    else: # argument is a file that exists
+        config_path = sys.argv[config_index+1]
+        data:dict = parse_TOML(config_path)
+        print(data)
+
 def main(): # this is the main function
     if len(sys.argv) > 1:
         if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
