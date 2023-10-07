@@ -220,9 +220,7 @@ def set_config():
         print("NO CONFIG FILE PROVIDED")
     elif not os.path.exists(sys.argv[config_index+1]): # if provided argument is not valid
         print("CONFIG FILE DOES NOT EXIST")
-    elif os.path.isdir(sys.argv[config_index+1]): # if directory is provided
-        print("PLEASE PROVIDE A FILE")
-    elif not sys.argv[config_index+1].endswith(".toml"): # if non-TOML file is provided
+    elif os.path.isdir(sys.argv[config_index+1]) or not sys.argv[config_index+1].endswith(".toml"): # if directory or non-TOML file is provided
         print ("PLEASE PROVIDE A TOML FILE")
     else: # argument is a file that exists
         config_path = sys.argv[config_index+1]
