@@ -234,11 +234,12 @@ def set_config():
 def apply_config(data):
     input_path = sys.argv[1]
     # search for and apply options one by one - currently only -o/-output flags supported
-    # if data["option-name"]
+    # if "option-name" in data.keys():
         # option_to_enable = data["option-name"]
-    if data["output"]:
+    if "output" in data.keys():
         output_folder  = data["output"]
 
+    # convert files
     outputToDir(input_path, output_folder)
 
 def main(): # this is the main function
