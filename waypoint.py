@@ -204,10 +204,11 @@ def parse_TOML(config_file):
 def set_config():
     # Parse config file, override all other flags
     print("checking for toml file")
+    # store config string argument
     config = "-c" if ('-c' in sys.argv) else "-config"
+    # store config string's index location in sys.argv
     config_index = sys.argv.index(config)
-
-    # config file path immediately follows -c or -config flag
+    # config file path immediately follows -c or -config flag (config file will exist in sys.argv[config_index+1])
     if len(sys.argv) == config_index+1: # if no argument follows config flag
         print("NO CONFIG FILE PROVIDED")
     elif not os.path.exists(sys.argv[config_index+1]): # if provided argument is not valid
@@ -216,11 +217,11 @@ def set_config():
         print ("PLEASE PROVIDE A TOML FILE")
     else: # argument is a file that exists
         config_path = sys.argv[config_index+1]
-        data:dict = parse_TOML(config_path)
+        data:dict = parse_TOML(config_path) # parse TOML file and store in data
         if not data: # if parse_TOML() failed
             print("Could not parse provided config file. Please double-check passed file")
         else:
-            print(data)
+            # apply config options inside data
             apply_config(data)
 
 def apply_config(data):
