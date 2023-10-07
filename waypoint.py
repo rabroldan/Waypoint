@@ -200,7 +200,10 @@ def parse_TOML(config_file):
     
 def main(): # this is the main function
     if len(sys.argv) > 1:
-        if sys.argv[1] == '-h' or sys.argv[1] == '-help':
+        if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
+            # Parse config file, override all other flags
+            print("checking for toml file")
+        elif sys.argv[1] == '-h' or sys.argv[1] == '-help':
             # Display help message
             print("Help message goes here.")
         elif sys.argv[1] == '-v' or sys.argv[1] == '-version':
