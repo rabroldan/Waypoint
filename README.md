@@ -25,8 +25,9 @@ Open with with your preferred code editor
 9. **Config File Support:** Provide users with the ability to specify optional arguments in a [TOML](https://toml.io/en/) configuration file instead of passing them as command line arguments
 
 ## To Run Waypoint
+Waypoint uses the [tomllib](https://docs.python.org/3/library/tomllib.html) library, which was added to the Python Standard Library as of Python 3.11 via [PEP 680](https://peps.python.org/pep-0680/).
 
-**Please ensure you have Python installed.**
+**Please ensure you have Python 3.11 or later installed.**
 
 If not, please download it [here](https://www.python.org/downloads/).
 
