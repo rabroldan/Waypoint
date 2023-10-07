@@ -1,7 +1,7 @@
 
 import os
 import sys
-import tomli
+import tomllib
 VERSION = "2" # current version of the tool
 
 def process_folder(folder_path):
@@ -196,9 +196,9 @@ def parse_TOML(config_file):
     # parses input TOML-formatted config file
     with open(config_file, 'rb') as f:
         try:
-            data:dict = tomli.load(f)
+            data:dict = tomllib.load(f)
             return data
-        except tomli.TOMLDecodeError:
+        except tomllib.TOMLDecodeError:
             print("TOML FILE COULD NOT BE PARSED. PLEASE CHECK THE FORMAT")
 
 def set_config():
