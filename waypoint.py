@@ -230,9 +230,8 @@ def apply_config(data):
     # search for and apply options one by one - currently only -o/-output flags supported
     # if "option-name" in data.keys():
         # option_to_enable = data["option-name"]
-    if "output" in data.keys():
+    if "output" in data.keys(): # if output option was defined in TOML file
         output_folder  = data["output"]
-
     # convert files
     outputToDir(input_path, output_folder)
 
