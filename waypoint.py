@@ -1,7 +1,7 @@
 
 import os
 import sys
-
+import tomli
 VERSION = "2" # current version of the tool
 
 def process_folder(folder_path):
