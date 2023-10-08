@@ -1,7 +1,7 @@
 
 import os
 import sys
-
+import tomllib
 VERSION = "2" # current version of the tool
 
 def process_folder(folder_path):
@@ -192,10 +192,54 @@ def write_markdown_to_html(new_content, new_title, ):
 def is_markdown(file_name):
     return (".md" in  file_name)
 
+def parse_TOML(config_file):
+    # parses input TOML-formatted config file
+    with open(config_file, 'rb') as f:
+        try:
+            data:dict = tomllib.load(f)
+            return data
+        except tomllib.TOMLDecodeError:
+            print("TOML FILE COULD NOT BE PARSED. PLEASE CHECK THE FORMAT")
+
+def set_config():
+    # Parse config file, override all other flags
+    print("checking for toml file")
+    # store config string argument
+    config = "-c" if ('-c' in sys.argv) else "-config"
+    # store config string's index location in sys.argv
+    config_index = sys.argv.index(config)
+    # config file path immediately follows -c or -config flag (config file will exist in sys.argv[config_index+1])
+    if len(sys.argv) == config_index+1: # if no argument follows config flag
+        print("NO CONFIG FILE PROVIDED")
+    elif not os.path.exists(sys.argv[config_index+1]): # if provided argument is not valid
+        print("CONFIG FILE DOES NOT EXIST")
+    elif os.path.isdir(sys.argv[config_index+1]) or not sys.argv[config_index+1].endswith(".toml"): # if directory or non-TOML file is provided
+        print ("PLEASE PROVIDE A TOML FILE")
+    else: # argument is a file that exists
+        config_path = sys.argv[config_index+1]
+        data:dict = parse_TOML(config_path) # parse TOML file and store in data
+        if not data: # if parse_TOML() failed
+            print("Could not parse provided config file. Please double-check passed file")
+        else:
+            # apply config options inside data
+            apply_config(data)
+
+def apply_config(data):
+    input_path = sys.argv[1]
+    output_folder = "./waypoint" #if no output defined, use ./waypoint
+    # search for and apply options one by one - currently only -o/-output flags supported
+    # if "option-name" in data.keys():
+        # option_to_enable = data["option-name"]
+    if "output" in data.keys(): # if output option was defined in TOML file
+        output_folder  = data["output"]
+    # convert files
+    outputToDir(input_path, output_folder)
 
 def main(): # this is the main function
     if len(sys.argv) > 1:
-        if sys.argv[1] == '-h' or sys.argv[1] == '-help':
+        if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
+            set_config()
+        elif sys.argv[1] == '-h' or sys.argv[1] == '-help':
             # Display help message
             print("Help message goes here.")
         elif sys.argv[1] == '-v' or sys.argv[1] == '-version':
