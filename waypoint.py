@@ -2,83 +2,94 @@
 import os
 import sys
 import tomllib
-VERSION = "2" # current version of the tool
+
+VERSION = "2"  # current version of the tool
+
 
 def process_folder(folder_path):
     # Process all .txt files in a folder
     items = os.listdir(folder_path)
-    new_title=f"Waypoint Title"
-    
-    #123
-    if not items:
-        print("The folder is empty.")
-        
 
-    print("Items in the folder:")
-    for i, item in enumerate(items, start=1):
-        if item.endswith(".txt") or item.endswith(".md"):
-            print(f"{i}. {item}")
+    new_title = f"Waypoint Title"
 
-        ## Markdown support: Allows for .md files in directories to work
-        if item.endswith(".txt") or item.endswith(".md"):
-            # Create the new HTML file name
-            newfile = os.path.splitext(item)[0] + ".html"
+    filestxt = "test/txtFiles"
+    process_file(filestxt, new_title, 1)
 
-            # Read the content from the txt file
-            with open(os.path.join(folder_path, item), 'r') as file:
-                file_contents = file.read()
-
-            ## Markdown support: Adding different writing methods for each different type of file
-            if is_markdown(item):
-                new_file = write_markdown_to_html(file_contents, new_title, )
-            else:
-                new_file = write_text_to_html(file_contents, new_title, )
-
-            # Write the content to the html file
-            with open(os.path.join(folder_path, newfile), 'w') as html_file:
-                html_file.write(new_file)
-
-            
+    filesmd = "test/mdFiles"
+    process_file(filesmd, new_title, 1)
 
 
+def process_file(
+    file_path, title=None, number=None, output=None
+):  # process the file from txt to HTML
+    if file_path.endswith(".txt"):
+        files = "test/txtFiles"
 
+    if file_path.endswith(".md"):
+        files = "test/mdFiles"
 
-def process_file(file_path): # process the file from txt to HTML
-    with open(file_path, 'r') as file: # this opens the file inorder and 
-        file_contents = file.read()
-    
-        
-        new_title=os.path.splitext(file_path)[0] 
+    else:
+        if file_path == "test/txtFiles":
+            files = "test/txtFiles"
+        if file_path == "test/mdFiles":
+            files = "test/mdFiles"
+
+    if number is None:
+        new_file_path = os.path.join(files, file_path)
+
+        with open(new_file_path, "r") as file:
+            file_contents = file.read()
+
+        if title is None:
+            new_title = os.path.splitext(file_path)[0]
+        else:
+            new_title = title
 
         new_content = file_contents
-         
-
-        ## Markdown support changing new filename based on what type of file is it
         html_newfile_path = ""
+        html_contents = ""
+        ## Markdown support changing new filename based on what type of file is it
+
         if is_markdown(file_path):
-            html_newfile_path = file_path.replace('.md', '.html')
-        else: 
-            html_newfile_path = file_path.replace('.txt', '.html')
+            html_newfile_path = file_path.replace(".md", ".html")
+        else:
+            html_newfile_path = file_path.replace(".txt", ".html")
 
         ## Markdown support: changing which function gets called for each different filetype
-        html_contents = ""
-        if is_markdown(file_path):
-            html_contents = write_markdown_to_html(new_content,new_title, )
+
+        if output is not None:
+            outputdirect = output
         else:
-            html_contents = write_text_to_html(new_content,new_title, )
+            outputdirect = "outputFolder"
 
-        with open(html_newfile_path, 'w') as html_file: # this will write the contents to the new html file
+        if not os.path.exists(outputdirect):
+            os.makedirs(outputdirect)
+            new_file_path = os.path.join(outputdirect, html_newfile_path)
+        else:
+            new_file_path = os.path.join(outputdirect, html_newfile_path)
+
+        if is_markdown(file_path):
+            html_contents = write_markdown_to_html(new_content, new_title)
+        else:
+            html_contents = write_text_to_html(new_content, new_title)
+
+        with open(
+            new_file_path, "w"
+        ) as html_file:  # this will write the contents to the new html file
             html_file.write(html_contents)
-        
-        print(f"Text from '{file_path}' converted to HTML '{html_newfile_path}'.")
 
+    else:
+        filesdirec = os.listdir(files)
 
+        for item in filesdirec:
+            process_file(item)
 
-        print("Okay Bye!")
 
 # this provides the layout of the html with an editable title, content and css style
-def write_text_to_html(new_content, new_title, ): 
-
+def write_text_to_html(
+    new_content,
+    new_title,
+):
     html_content = f"""<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -100,80 +111,60 @@ def outputToDir(file_path, outputpath):
     if not os.path.exists(outputpath):
         os.makedirs(outputpath)
 
-    with open(file_path, 'r') as file:
-        file_contents = file.read()
+    process_file(file_path, output=outputpath)
 
-        # Define the output file path within the output folder
-        output_file_name = os.path.basename(file_path)  # Get the file name without the path
-        output_file_name_without_extension, _ = os.path.splitext(output_file_name)
-        output_html_file_name = f"{output_file_name_without_extension}.html"
-        output_html_path = os.path.join(outputpath, output_html_file_name)
-
-        new_title = output_file_name_without_extension  # You can customize this as needed
-        new_content = file_contents
-         
-
-        ## Markdown support: changing which function gets called for each different filetype
-        html_contents = ""
-        if is_markdown(file_path):
-            html_contents = write_markdown_to_html(new_content, new_title  )
-        else:
-            html_contents = write_text_to_html(new_content, new_title  )
-
-        with open(output_html_path, 'w') as html_file:
-            html_file.write(html_contents)
-
-        print(f"Text from '{file_path}' converted to HTML and saved as '{output_html_path}'.")
 
 # Markdown support functions here:
 #
 # Similiar to the text variant this function writes converts the markdown into HTML with some of the included features (headings, bolding, italics)
 # Interacts similar to text
-def write_markdown_to_html(new_content, new_title, ):
-    
+def write_markdown_to_html(
+    new_content,
+    new_title,
+):
     # Markdown conversion
     converted_md = ""
-    lines = new_content.splitlines()    # Spliting each line of the new_content into a list
-
+    lines = (
+        new_content.splitlines()
+    )  # Spliting each line of the new_content into a list
 
     i = 0
-    for  curr_line in lines:        # Going through each line
-       
-        if '#' in curr_line:                        # Checking for titles
+    for curr_line in lines:  # Going through each line
+        if "#" in curr_line:  # Checking for titles
             if curr_line.startswith("###"):
-                curr_line = "<h3>" + curr_line.lstrip('#') + "</h3>\n"
-            elif curr_line.startswith("##"):                             
-                curr_line = "<h2>" + curr_line.lstrip('#') + "</h2>\n"
+                curr_line = "<h3>" + curr_line.lstrip("#") + "</h3>\n"
+            elif curr_line.startswith("##"):
+                curr_line = "<h2>" + curr_line.lstrip("#") + "</h2>\n"
             else:
-                curr_line = "<h1>" + curr_line.lstrip('#') + "</h1>\n"
+                curr_line = "<h1>" + curr_line.lstrip("#") + "</h1>\n"
 
-        elif '`' in curr_line:                        # Checking for titles
+        elif "`" in curr_line:  # Checking for titles
             if curr_line.startswith("```") and curr_line.endswith("```"):
-                curr_line = "<code>" + curr_line.strip('`') + "</code>\n\n"
-            elif curr_line.startswith("`") and curr_line.endswith("`"):                             
-                 curr_line = "<code>" + curr_line.strip('`') + "</code>\n\n"
+                curr_line = "<code>" + curr_line.strip("`") + "</code>\n\n"
+            elif curr_line.startswith("`") and curr_line.endswith("`"):
+                curr_line = "<code>" + curr_line.strip("`") + "</code>\n\n"
             else:
                 curr_line = "<p>" + curr_line + "</p>\n"
 
-        elif '-' in curr_line:                        # Checking for titles
-            if curr_line.startswith("---") :
-                curr_line = '<hr> \n'
+        elif "-" in curr_line:  # Checking for titles
+            if curr_line.startswith("---"):
+                curr_line = "<hr> \n"
             else:
-                curr_line = '</br>'
+                curr_line = "</br>"
 
-        elif '*' in curr_line:                                              # Checking for bold or itialized text
-            if curr_line.startswith('**') and curr_line.endswith('**'):
-                curr_line = "<b>" + curr_line.strip('*') + "</b><br/>\n"
-            elif curr_line.startswith('*') and curr_line.endswith("*"):
-                curr_line = "<i>" + curr_line.strip('*') + "</i><br/>\n"
+        elif "*" in curr_line:  # Checking for bold or itialized text
+            if curr_line.startswith("**") and curr_line.endswith("**"):
+                curr_line = "<b>" + curr_line.strip("*") + "</b><br/>\n"
+            elif curr_line.startswith("*") and curr_line.endswith("*"):
+                curr_line = "<i>" + curr_line.strip("*") + "</i><br/>\n"
             else:
                 curr_line = "<p>" + curr_line + "</p>\n"
-        elif len(curr_line) > 0:                                     # Checking for regular text
-            curr_line = "<p>" + curr_line + "</p>\n"     
+        elif len(curr_line) > 0:  # Checking for regular text
+            curr_line = "<p>" + curr_line + "</p>\n"
         else:
-            curr_line = '\n'       # Ignoring spaces
+            curr_line = "\n"  # Ignoring spaces
 
-        converted_md += curr_line       # adding change to final conversion
+        converted_md += curr_line  # adding change to final conversion
 
     # Creating HTML file contents
     html_content = f"""<!DOCTYPE html>
@@ -189,101 +180,101 @@ def write_markdown_to_html(new_content, new_title, ):
 </html>"""
     return html_content
 
+
 def is_markdown(file_name):
-    return (".md" in  file_name)
+    return ".md" in file_name
+
 
 def parse_TOML(config_file):
     # parses input TOML-formatted config file
-    with open(config_file, 'rb') as f:
+    with open(config_file, "rb") as f:
         try:
-            data:dict = tomllib.load(f)
+            data: dict = tomllib.load(f)
             return data
         except tomllib.TOMLDecodeError:
             print("TOML FILE COULD NOT BE PARSED. PLEASE CHECK THE FORMAT")
+
 
 def set_config():
     # Parse config file, override all other flags
     print("checking for toml file")
     # store config string argument
-    config = "-c" if ('-c' in sys.argv) else "-config"
+    config = "-c" if ("-c" in sys.argv) else "-config"
     # store config string's index location in sys.argv
     config_index = sys.argv.index(config)
     # config file path immediately follows -c or -config flag (config file will exist in sys.argv[config_index+1])
-    if len(sys.argv) == config_index+1: # if no argument follows config flag
+    if len(sys.argv) == config_index + 1:  # if no argument follows config flag
         print("NO CONFIG FILE PROVIDED")
-    elif not os.path.exists(sys.argv[config_index+1]): # if provided argument is not valid
-        print("CONFIG FILE DOES NOT EXIST")
-    elif os.path.isdir(sys.argv[config_index+1]) or not sys.argv[config_index+1].endswith(".toml"): # if directory or non-TOML file is provided
-        print ("PLEASE PROVIDE A TOML FILE")
-    else: # argument is a file that exists
-        config_path = sys.argv[config_index+1]
-        data:dict = parse_TOML(config_path) # parse TOML file and store in data
-        if not data: # if parse_TOML() failed
-            print("Could not parse provided config file. Please double-check passed file")
+    elif not sys.argv[config_index + 1].endswith(
+        ".toml"
+    ):  # if directory or non-TOML file is provided
+        print("PLEASE PROVIDE A TOML FILE")
+
+    elif sys.argv[config_index + 1].endswith(".toml"):
+        files = "test/tomlFiles"
+
+        file_met = sys.argv[config_index + 1]
+
+        file_path = os.path.join(files, file_met)
+
+        if os.path.isfile(file_path):
+            with open(file_path, "r") as file:
+                file_contents = file.read()
+            # will display toml files in the screen
+            print(file_contents)
         else:
-            # apply config options inside data
-            apply_config(data)
+            print("TOML FILE NOT IN THE RIGHT FOLDER")
 
-def apply_config(data):
-    input_path = sys.argv[1]
-    output_folder = "./waypoint" #if no output defined, use ./waypoint
-    # search for and apply options one by one - currently only -o/-output flags supported
-    # if "option-name" in data.keys():
-        # option_to_enable = data["option-name"]
-    if "output" in data.keys(): # if output option was defined in TOML file
-        output_folder  = data["output"]
-    # convert files
-    outputToDir(input_path, output_folder)
 
-def main(): # this is the main function
+def main():  # this is the main function
     if len(sys.argv) > 1:
-        if ('-c' in sys.argv) or ('-config' in sys.argv): # check for -c or -config flags
+        if ("-c" in sys.argv) or (
+            "-config" in sys.argv
+        ):  # check for -c or -config flags
             set_config()
-        elif sys.argv[1] == '-h' or sys.argv[1] == '-help':
+        elif sys.argv[1] == "-h" or sys.argv[1] == "-help":
             # Display help message
             print("Help message goes here.")
-        elif sys.argv[1] == '-v' or sys.argv[1] == '-version':
+        elif sys.argv[1] == "-v" or sys.argv[1] == "-version":
             # Display version
             print("Version: 1.0")  # Replace with your actual version
+
         elif len(sys.argv) == 2:
-            input_path = sys.argv[1]
-
-            if not os.path.exists(input_path):
-                print("FILE/DOCUMENT DOES NOT EXIST")
-            elif os.path.isfile(input_path):
+            if sys.argv[1].endswith(".txt"):
+                input_path = sys.argv[1]
                 process_file(input_path)
-            elif os.path.isdir(input_path):
-                process_folder(input_path)
-            else:
-                print(f"Error: '{input_path}' is not a file or a folder.")
-        elif sys.argv[2] == '-o' or sys.argv[2] == '-O' or sys.argv[2] == '-output' or sys.argv[2] == '-Output':
-            input_path = sys.argv[1]
-            output_folder  = sys.argv[3]
-            outputToDir(input_path, output_folder )
 
+            elif sys.argv[1].endswith(".md"):
+                input_path = sys.argv[1]
+                process_file(input_path)
+
+            else:
+                input_path = sys.argv[1]
+                process_folder(input_path)
+
+        elif (
+            sys.argv[2] == "-o"
+            or sys.argv[2] == "-O"
+            or sys.argv[2] == "-output"
+            or sys.argv[2] == "-Output"
+        ):
+            input_path = sys.argv[1]
+            output_folder = sys.argv[3]
+            outputToDir(input_path, output_folder)
 
         else:
             print("Invalid argument provided!")
     else:
-        print('Invalid argument provided!')
-        print('Use --help or -h flag for more info')
-
-         
+        print("Invalid argument provided!")
+        print("Use --help or -h flag for more info")
 
 
-
-
-if __name__ == "__main__": # this starts the main program
-
-    check = main() # this begins with a argument of either a file or a
+if __name__ == "__main__":  # this starts the main program
+    check = main()  # this begins with a argument of either a file or a
 
     if check == True:
         print("Files has been processed GOOD BYE")
     elif check == False:
-        print("Files has Not been processed, please create the file / document before converting. GOOD BYE")
-
-        
-
-
-    
-    
+        print(
+            "Files has Not been processed, please create the file / document before converting. GOOD BYE"
+        )
