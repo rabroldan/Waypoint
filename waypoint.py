@@ -9,7 +9,7 @@ def process_folder(folder_path):
     items = os.listdir(folder_path)
     new_title=f"Waypoint Title"
     
-    
+    #123
     if not items:
         print("The folder is empty.")
         
