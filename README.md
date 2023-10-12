@@ -22,7 +22,7 @@ Open with with your preferred code editor
    - **Inline Code Blocks:** Enable users to include inline code with either single backticks (`) or triple backticks (```) and ensure proper code formatting.
    - **Horizontal Rules:** Offer support for horizontal rules to visually separate content sections in Markdown.
 
-9. **Config File Support:** Provide users with the ability to specify optional arguments in a [TOML](https://toml.io/en/) configuration file instead of passing them as command line arguments
+9. **Config File Support:** Provide users with the ability to specify optional arguments in a [TOML](https://toml.io/en/) configuration file instead of passing them as command line arguments this will print the TOML files in the terminal showing its contents
 
 ## To Run Waypoint
 Waypoint uses the [tomllib](https://docs.python.org/3/library/tomllib.html) library, which was added to the Python Standard Library as of Python 3.11 via [PEP 680](https://peps.python.org/pep-0680/).
@@ -31,44 +31,40 @@ Waypoint uses the [tomllib](https://docs.python.org/3/library/tomllib.html) libr
 
 If not, please download it [here](https://www.python.org/downloads/).
 
+## If you want to process a single file and please upload it to the properl folder
+
+text files goes to = ```test/txtFiles```
+md files goes to = ```test/mdFiles```
+TOML files goes to = ```test/tomlFiles```
+
 1. To process a file or a folder, you can try one of the following:
 
    - To process a file:
      ```
-     python waypoint.txt version.txt
+     python waypoint.txt test.txt
      ```
      or
      ```
-     python waypoint.py version.md
+     python waypoint.py 1stmd.md
      ```
 
    - To process a folder:
      ```
-     python waypoint.txt version
-     ```
-
-  
-2. If you want to try one of the examples:
-
-   - To process the file for the example:
-     ```
-     python waypoint.txt test.txt
-     ```
-
-   - To process the folder for the example:
-     ```
      python waypoint.txt test
      ```
-3. To process To process a file or a folder to a different output try the following
+
+  
+2. To process To process a file or a folder to a different output try the following
   
     ```
-     python waypoint.py version.txt -o newDirectory
+     python waypoint.py test.txt -o newDirectory
      ```
      or
      ```
-     python waypoint.py version.md -o newDirectory
+     python waypoint.py test.md -o newDirectory
      ```
-4. To pass a TOML-formatted config file when processing a file try the following
+
+3. To pass a TOML-formatted config file when processing a file try the following
       ```
       python waypoint.py version.txt -c config.toml
       ```
