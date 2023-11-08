@@ -1,7 +1,7 @@
 # testing testing
 import os
 import sys
-import tomllib
+
 
 VERSION = "2"  # current version of the tool
 
@@ -17,8 +17,25 @@ def process_folder(folder_path):
 
         filesmd = "test/mdFiles"
         process_file(filesmd, new_title, 1)
+        return True
     else:
         print(f"FOLDER NOT AVAILABLE / FOUND")
+
+
+def process_text(string):
+    """
+    This will process the string and ensure that it is working please note that the file name would named testing
+    and will replace the content if needed but the file name would still be the same this is the path
+    test/unittesting/testing.html
+    """
+    html_contents = write_text_to_html(string, "waypoint")
+    new_file_path = "test/unittesting/testing.html"
+    with open(new_file_path, "w") as html_file:
+        html_file.write(html_contents)
+    if os.path.exists(new_file_path):
+        return True
+    else:
+        return False
 
 
 def process_file(
@@ -37,7 +54,7 @@ def process_file(
             files = "test/mdFiles"
 
     if number is None:
-        if os.path.exists(file_path):
+        if os.path.exists(files):
             new_file_path = os.path.join(files, file_path)
 
             with open(new_file_path, "r") as file:
@@ -79,14 +96,20 @@ def process_file(
             ) as html_file:  # this will write the contents to the new html file
                 html_file.write(html_contents)
 
+            return True
+
         else:
             print(f"FILE NOT AVAILABLE / FOUND")
+            print(file_path)
+            return False
 
     else:
         filesdirec = os.listdir(files)
         # recursive call for directories
         for item in filesdirec:
             process_file(item)
+
+        return True
 
 
 # this provides the layout of the html with an editable title, content and css style
@@ -191,45 +214,19 @@ def is_markdown(file_name):
     return ".md" in file_name
 
 
-def parse_TOML(config_file):
-    # parses input TOML-formatted config file
-    with open(config_file, "rb") as f:
-        try:
-            data: dict = tomllib.load(f)
-            return data
-        except tomllib.TOMLDecodeError:
-            print("TOML FILE COULD NOT BE PARSED. PLEASE CHECK THE FORMAT")
+def set_config(file_path):
+    files = "test/tomlFiles"
 
+    new_file_path = os.path.join(files, file_path)
 
-def set_config():
-    # Parse config file, override all other flags
-    print("checking for toml file")
-    # store config string argument
-    config = "-c" if ("-c" in sys.argv) else "-config"
-    # store config string's index location in sys.argv
-    config_index = sys.argv.index(config)
-    # config file path immediately follows -c or -config flag (config file will exist in sys.argv[config_index+1])
-    if len(sys.argv) == config_index + 1:  # if no argument follows config flag
-        print("NO CONFIG FILE PROVIDED")
-    elif not sys.argv[config_index + 1].endswith(
-        ".toml"
-    ):  # if directory or non-TOML file is provided
-        print("PLEASE PROVIDE A TOML FILE")
-
-    elif sys.argv[config_index + 1].endswith(".toml"):
-        files = "test/tomlFiles"
-
-        file_met = sys.argv[config_index + 1]
-
-        file_path = os.path.join(files, file_met)
-
-        if os.path.isfile(file_path):
-            with open(file_path, "r") as file:
-                file_contents = file.read()
-            # will display toml files in the screen
-            print(file_contents)
-        else:
-            print("TOML FILE NOT IN THE RIGHT FOLDER")
+    if os.path.isfile(new_file_path):
+        with open(new_file_path, "r") as file:
+            file_contents = file.read()
+        # will display toml files in the screen
+        print(file_contents)
+        return True
+    else:
+        print("TOML FILE NOT IN THE RIGHT FOLDER")
 
 
 def main():  # this is the main function
@@ -237,13 +234,14 @@ def main():  # this is the main function
         if ("-c" in sys.argv) or (
             "-config" in sys.argv
         ):  # check for -c or -config flags
-            set_config()
+            input_path = sys.argv[1]
+            set_config(input_path)
         elif sys.argv[1] == "-h" or sys.argv[1] == "-help":
             # Display help message
             print("Help message goes here.")
         elif sys.argv[1] == "-v" or sys.argv[1] == "-version":
             # Display version
-            print("Version: 1.0")  # Replace with your actual version
+            print("Version: 1.0")
 
         elif len(sys.argv) == 2:
             if sys.argv[1].endswith(".txt"):

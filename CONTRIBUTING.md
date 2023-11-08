@@ -1,22 +1,22 @@
 # Contributing
 
-First of all, thank you for considering contributing to Waypoint.
+First and foremost, thank you for considering contributing to Waypoint.
 
-Please follow these guidelines to ensure a smooth and cooperative contribution process.
+Please follow these guidelines to ensure a smooth and collaborative contribution process.
 
 ## What Can I Contribute?
 
-Waypoint is a tool for creating a journal using a text file or even converting the text to HTML. To contribute, you can consider the following:
+Waypoint is a tool for creating a journal using a text file or even converting the text to HTML. When contributing, you can consider the following:
 
-- Enhance the program's functionality.
-- Help with existing issues or create new ones.
-- Share your ideas and suggestions.
-- Report any bugs you encounter.
-- Improve documentation, including incomplete or missing sections.
+- Enhancing the program's functionality.
+- Helping with existing issues or creating new ones.
+- Sharing your ideas and suggestions.
+- Reporting any bugs you encounter.
+- Improving documentation, including incomplete or missing sections.
 
 ## Responsibilities
 
-When contributing, please make sure that your code runs correctly. If you plan to make significant changes or enhancements, create issues to discuss and plan the changes. Transparent communication is essential for effective collaboration.
+When contributing, please ensure that your code runs correctly. If you plan to make significant changes or enhancements, create issues to discuss and plan the changes. Transparent communication is essential for effective collaboration.
 
 ## Before You Contribute
 
@@ -34,43 +34,43 @@ If you want to process a single file, please upload it to the appropriate folder
 
    - To process a file:
 
-     ```bash
+     ```
      python waypoint.py test.txt
      ```
 
      or
 
-     ```bash
+     ```
      python waypoint.py 1stmd.md
      ```
 
    - To process a folder:
 
-     ```bash
+     ```
      python waypoint.py test
      ```
 
 2. To specify a different output directory, use one of these commands:
 
-   ```bash
+   ```
    python waypoint.py test.txt -o newDirectory
    ```
 
    or
 
-   ```bash
+   ```
    python waypoint.py test.md -o newDirectory
    ```
 
 3. To provide a TOML-formatted config file when processing a file, use one of these commands:
 
-   ```bash
+   ```
    python waypoint.py version.txt -c config.toml
    ```
 
    or
 
-   ```bash
+   ```
    python waypoint.py version.txt -config config.toml
    ```
 
@@ -78,7 +78,7 @@ If you want to process a single file, please upload it to the appropriate folder
 
 ### Step 1: Clone the Repository
 
-```bash
+```
 git clone https://github.com/rabroldan/Waypoint.git
 ```
 
@@ -102,13 +102,13 @@ This project uses Python Black, which provides automatic style formatting follow
 
 Ensure Python is installed:
 
-```bash
+```
 pip install black
 ```
 
 To format the code:
 
-```bash
+```
 black ./waypoint.py
 ```
 
@@ -118,18 +118,59 @@ Ruff is a Python linter and code formatter, similar to Black, and it is used alo
 
 Please ensure Ruff Linter is installed:
 
-```bash
+```
 pip install ruff
 ```
 
 To run Ruff:
 
-```bash
+```
 ruff check .   # Lint all files in the current directory.
 ruff format .  # Format all files in the current directory.
 ```
 
-Please note that Black and Ruff Linter will also run automatically on save and A pre-commit hook is also installed to ensure the quality and consistency of the code and its formatting.
+Please note that Black and Ruff Linter will also run automatically on save, and a pre-commit hook is installed to ensure the quality and consistency of the code and its formatting.
+
+### Testing
+
+To run a single test for a function, use the following code:
+
+```
+python -m unittest discover -k [name of the function]
+```
+
+For example:
+
+```
+python -m unittest discover -k test_config
+```
+
+Or, if you want to test the entire module, use:
+
+```
+nose2
+```
+Or, if you want to test a the single function you can use
+
+
+```
+python -m unittest discover -k "test_txt" # To test a string
+python -m unittest discover -k "test_txtfile" # To test a txt file
+python -m unittest discover -k "test_tomlfile" # To test a toml file
+python -m unittest discover -k "test_folder" # To test a folder file
+```
+
+Code Coverage Analysis
+
+You can also use code coverage analysis to ensure all tests are done which in this case is 9 tests, you can use the following.
+
+```
+coverage run -m unittest discover
+```
+
+### For the sake of testing I added a testunit that will fail "test_tofail" please ignore if this is the only fail in the testing
+
+Please ensure you have the right name inside the quotation mark to ensure that you will run the test properly.
 
 ### Step 6: Commit Your Changes
 
