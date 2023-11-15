@@ -157,7 +157,7 @@ Or, if you want to test a the single function you can use
 python -m unittest discover -k "test_txt" # To test a string
 python -m unittest discover -k "test_txtfile" # To test a txt file
 python -m unittest discover -k "test_tomlfile" # To test a toml file
-
+python -m unittest discover -k "test_folder" # To test a folder files
 ```
 
 Code Coverage Analysis
