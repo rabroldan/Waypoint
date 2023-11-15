@@ -16,11 +16,6 @@ class TestSum(unittest.TestCase):
         argc = "-c"
         self.assertTrue(argtest(argc))
 
-    def test_tofail(self):
-        # This is used for failing a test
-        argv = "-x"
-        self.assertTrue(argtest(argv))
-
 
 class Testtext(unittest.TestCase):
     def test_txt(self):  # Corrected method name
@@ -30,18 +25,22 @@ class Testtext(unittest.TestCase):
             )
         )
 
+    # this is to test txt files
     def test_txtfile(self):
         file_path = "testtxt.txt"
         self.assertTrue(process_file(file_path))
 
+    # this is to test md files
     def test_mdfile(self):
         file_path = "testmd.md"
         self.assertTrue(process_file(file_path))
 
+    # this is to test toml files
     def test_tomlfile(self):
         file_path = "test.toml"
         self.assertTrue(set_config(file_path))
 
+    # this is to test folders files
     def test_folder(self):
         file_path = "test/txtFiles"
         self.assertTrue(process_file(file_path, number=1))
