@@ -4,14 +4,17 @@ from testing import argtest
 
 
 class TestSum(unittest.TestCase):
+    # to test help argument
     def test_help(self):
         argh = "-h"
         self.assertTrue(argtest(argh))
 
+    # to test version argument
     def test_version(self):
         argv = "-v"
         self.assertTrue(argtest(argv))
 
+    # to test config argument
     def test_config(self):
         argc = "-c"
         self.assertTrue(argtest(argc))
