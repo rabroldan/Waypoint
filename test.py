@@ -3,6 +3,7 @@ from waypoint import process_text, process_file, set_config
 from testing import argtest
 
 
+# to test github actions more files was added and to avoid merge conflict
 class TestSum(unittest.TestCase):
     # to test help argument
     def test_help(self):
