@@ -30,14 +30,17 @@ class Testtext(unittest.TestCase):
             )
         )
 
+    # to test txt file
     def test_txtfile(self):
         file_path = "testtxt.txt"
         self.assertTrue(process_file(file_path))
 
+    # to test md file
     def test_mdfile(self):
         file_path = "testmd.md"
         self.assertTrue(process_file(file_path))
 
+    # to test toml file
     def test_tomlfile(self):
         file_path = "test.toml"
         self.assertTrue(set_config(file_path))
