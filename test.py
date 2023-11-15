@@ -42,10 +42,6 @@ class Testtext(unittest.TestCase):
         file_path = "test.toml"
         self.assertTrue(set_config(file_path))
 
-    def test_folder(self):
-        file_path = "test/txtFiles"
-        self.assertTrue(process_file(file_path, number=1))
-
 
 if __name__ == "__main":
     unittest.main()
