@@ -16,11 +16,6 @@ class TestSum(unittest.TestCase):
         argc = "-c"
         self.assertTrue(argtest(argc))
 
-    def test_tofail(self):
-        # This is used for failing a test please comment out if needed
-        argv = "-x"
-        self.assertTrue(argtest(argv))
-
 
 class Testtext(unittest.TestCase):
     def test_txt(self):  # Corrected method name
