@@ -23,5 +23,5 @@ line-length = 80
 [tool.ruff]
 ignore = [
     "F541",  #f-string without any placeholders.
-    "E712",  #Comparison to `True` should be `cond is True` or `if cond:' Comparison to `False` should be `cond is False` or `if not cond:`.
+    "E712",  #Comparison to `True` should be `cond is True` or `if cond:' Comparison to `False` should be `cond is False` or `if not cond:`
 ]
