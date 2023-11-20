@@ -44,16 +44,16 @@ TOML files goes to = ```test/tomlFiles```
 
    - To process a file:
      ```
-     python waypoint.txt test.txt
+     python waypoint.py test.txt
      ```
      or
      ```
-     python waypoint.py 1stmd.md
+     python waypoint.py test.md
      ```
 
    - To process a folder:
      ```
-     python waypoint.txt test
+     python waypoint.py test
      ```
 
   

@@ -3,7 +3,7 @@ import os
 import sys
 
 
-VERSION = "2"  # current version of the tool
+VERSION = "2.2"  # current version of the tool
 
 
 def process_folder(folder_path):
