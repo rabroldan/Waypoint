@@ -31,10 +31,10 @@ Download ZIP or clone Waypoint to your local computer
 git clone https://github.com/rabroldan/Waypoint
 ```
 
-or
+or you can download and select one of the packages
 
 ```
-you can download and select one of the packages https://github.com/rabroldan/Waypoint/releases/tag/v2.3
+ https://github.com/rabroldan/Waypoint/releases/tag/v2.3
 ```
 *If Downloaded by ZIP extract file*
 
