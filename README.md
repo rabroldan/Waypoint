@@ -1,8 +1,5 @@
 # Waypoint
-Is a tool to create a journal with the use of a txt file, or even convert the file from text to html. Users can utilise this tool to record their ideas, encounters, and recollections in  text, making them easily accessible and compatible with a wide range of platforms and devices. By utilising the capabilities of Waypoint, people may concentrate on the substance of their journal entries without being distracted by difficult formatting, which streamlines and improves the journaling process.
-## Description
-The text processing tool lets users specify a custom output directory for the stored HTML files, creating the directory automatically if necessary. It also has the ability to convert individual text files to HTML, improving their readability. The tool also allows you to create new Markdown files and offers features like italicised and bold text, horizontal rules, inline code blocks, and the convenience of configuring optional arguments through a TOML configuration file rather than command line arguments. It can also display the contents of the file in the terminal.
-
+Is a tool to create a journal with the use of a txt file, or even convert the file from text to html. Users can utilise this tool to record their ideas, encounters, and recollections in  text, making them easily accessible and compatible with a wide range of platforms and devices. By utilising the capabilities of Waypoint, improving their readability. The tool also allows you to create new Markdown files and offers features like italicised and bold text, horizontal rules, inline code blocks, and the convenience of configuring optional arguments through a TOML configuration file rather than command line arguments. It can also display the contents of the file in the terminal.
 
 ## Features
 

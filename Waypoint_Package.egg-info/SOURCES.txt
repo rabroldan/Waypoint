@@ -1,0 +1,8 @@
+LICENSE
+README.md
+pyproject.toml
+Waypoint_Package.egg-info/PKG-INFO
+Waypoint_Package.egg-info/SOURCES.txt
+Waypoint_Package.egg-info/dependency_links.txt
+Waypoint_Package.egg-info/top_level.txt
+testing/__init__.py
