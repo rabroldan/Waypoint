@@ -34,7 +34,7 @@ git clone https://github.com/rabroldan/Waypoint
 or you can download and select one of the packages
 
 ```
- https://github.com/rabroldan/Waypoint/releases/tag/v2.3
+https://github.com/rabroldan/Waypoint/releases
 ```
 *If Downloaded by ZIP extract file*
 
